@@ -1,6 +1,7 @@
 package id.domain;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 import java.io.Serializable;
 
@@ -13,12 +14,8 @@ import java.io.Serializable;
 @ToString
 public class AccountPolicy implements Serializable {
 
-    @Getter
-    private boolean accountNonExpired;
-    @Getter
-    private boolean accountNonLocked;
-    @Getter
-    private boolean credentialsNonExpired;
-    @Getter
+    @Getter @Setter
     private boolean enabled;
+    @Getter @Setter
+    private boolean isAccountExpired;
 }

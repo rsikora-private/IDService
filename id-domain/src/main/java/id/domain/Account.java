@@ -1,6 +1,7 @@
 package id.domain;
 
 import id.domain.persistance.AccountRepository;
+import id.domain.sha.ShaPasswordEncoder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -12,7 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by robertsikora on 25.03.2016.
@@ -25,30 +27,39 @@ public class Account implements Serializable {
     private static final long serialVersionUID = 1391314099197545306L;
 
     @Id
-    @Getter @Setter
+    @Setter
     private ObjectId id;
     @NotEmpty
-    @Getter @Setter
+    @Getter
+    @Setter
     private String username;
     @NotEmpty
     @Setter
     private String password;
-    @Getter @Setter
-    private Collection<Authority> authorities;
+    @Getter
+    @Setter
+    private List<String> authorities = Collections.singletonList("ROLE_USER");
     @NotNull
-    @Getter @Setter
-    private AccountPolicy accountPolicy;
+    @Getter
+    @Setter
+    private AccountPolicy policy = new AccountPolicy();
+
+    public String getId() {
+        return id.toHexString();
+    }
 
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private ShaPasswordEncoder shaPasswordEncoder;
 
-    public boolean matchPassword(final String rawPassword){
-        final String encodedPassword = rawPassword;
+    public boolean matchPassword(final String rawPassword) {
+        final String encodedPassword = shaPasswordEncoder.encode(rawPassword);
         return encodedPassword.equals(password);
     }
 
-    public Account register(){
-        setPassword(password);
+    public Account register() {
+        setPassword(shaPasswordEncoder.encode(password));
         return accountRepository.save(this);
     }
 }

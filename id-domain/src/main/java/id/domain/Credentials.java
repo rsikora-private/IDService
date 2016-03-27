@@ -27,14 +27,14 @@ public class Credentials implements Serializable {
     @Autowired
     private AccountRepository accountRepository;
 
-    public Account signIn(){
+    public Account signIn() {
         final Account account = accountRepository.findByUsername(this.username);
-        if(account == null){
-            throw new BadCredentialsException("Wrong credentials !");
+        if (account == null) {
+            throw new BadCredentialsException("Wrong credentials!");
         }
-        if(account.matchPassword(password)){
+        if (account.matchPassword(password)) {
             return account;
         }
-        throw new BadCredentialsException("Wrong credentials !");
+        throw new BadCredentialsException("Wrong credentials!");
     }
 }

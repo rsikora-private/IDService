@@ -1,6 +1,6 @@
 package id.server;
 
-import id.api.IdService;
+import id.api.IdResource;
 import id.domain.Account;
 import id.domain.Credentials;
 import id.service.AccountService;
@@ -13,13 +13,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-class IdResourceImpl implements IdService {
+class IdResourceImpl implements IdResource {
 
     @Autowired
-    private AccountService authentication;
+    private AccountService accountService;
 
     @Override
     public Account signIn(@RequestBody final Credentials credentials) {
-        return authentication.signIn(credentials);
+        return accountService.signIn(credentials);
+    }
+
+    @Override
+    public void register(@RequestBody final Account account) {
+        accountService.register(account);
     }
 }

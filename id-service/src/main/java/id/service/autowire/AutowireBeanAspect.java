@@ -1,6 +1,7 @@
 package id.service.autowire;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,13 @@ public class AutowireBeanAspect {
     private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
     @Before("execution(* id..*ServiceImpl.*(..))\")")
-    public void logServiceAccess(final JoinPoint joinPoint) {
+    public void beforeSeriveMethods(final JoinPoint joinPoint) {
         final Object[] args = joinPoint.getArgs();
         Stream.of(args).forEach(t -> autowireCapableBeanFactory.autowireBean(t));
+    }
+
+    @AfterReturning(value = "execution(* id..*Repository.*(..))\")", returning = "result")
+    public void afterRepositoryMethods(final JoinPoint joinPoint, final Object result) {
+        autowireCapableBeanFactory.autowireBean(result);
     }
 }
