@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -22,13 +23,15 @@ public class AutowireBeanAspect {
     private AutowireCapableBeanFactory autowireCapableBeanFactory;
 
     @Before("execution(* id..*ServiceImpl.*(..))\")")
-    public void beforeSeriveMethods(final JoinPoint joinPoint) {
+    public void beforeService(final JoinPoint joinPoint) {
         final Object[] args = joinPoint.getArgs();
         Stream.of(args).forEach(t -> autowireCapableBeanFactory.autowireBean(t));
     }
 
     @AfterReturning(value = "execution(* id..*Repository.*(..))\")", returning = "result")
-    public void afterRepositoryMethods(final JoinPoint joinPoint, final Object result) {
-        autowireCapableBeanFactory.autowireBean(result);
+    public void afterRepositoryReturning(final JoinPoint joinPoint, final Object result) {
+        if (((Optional) result).isPresent()) {
+            autowireCapableBeanFactory.autowireBean(result);
+        }
     }
 }

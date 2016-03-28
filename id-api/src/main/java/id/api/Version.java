@@ -6,7 +6,7 @@ package id.api;
 enum Version {
     v1;
 
-    public static String current(){
+    public static String current() {
         return v1.name();
     }
 }

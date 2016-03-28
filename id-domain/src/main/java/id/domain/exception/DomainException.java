@@ -5,7 +5,7 @@ package id.domain.exception;
  */
 public class DomainException extends RuntimeException {
 
-    public DomainException(final Throwable throwable){
+    public DomainException(final Throwable throwable) {
         super(throwable);
     }
 }

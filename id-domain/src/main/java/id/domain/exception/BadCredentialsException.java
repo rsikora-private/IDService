@@ -5,7 +5,7 @@ package id.domain.exception;
  */
 public class BadCredentialsException extends RuntimeException {
 
-    public BadCredentialsException(final String message){
+    public BadCredentialsException(final String message) {
         super(message);
     }
 }

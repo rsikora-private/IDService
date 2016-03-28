@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * Created by robertsikora on 25.03.2016.
@@ -28,10 +29,8 @@ public class Credentials implements Serializable {
     private AccountRepository accountRepository;
 
     public Account signIn() {
-        final Account account = accountRepository.findByUsername(this.username);
-        if (account == null) {
-            throw new BadCredentialsException("Wrong credentials!");
-        }
+        final Optional<Account> accountOptional = accountRepository.findByUsername(this.username);
+        final Account account = accountOptional.orElseThrow(() -> new BadCredentialsException("Wrong credentials!"));
         if (account.matchPassword(password)) {
             return account;
         }

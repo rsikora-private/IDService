@@ -1,7 +1,7 @@
 package id.service;
 
-import id.domain.Credentials;
 import id.domain.Account;
+import id.domain.Credentials;
 
 /**
  * Created by robertsikora on 25.03.2016.
