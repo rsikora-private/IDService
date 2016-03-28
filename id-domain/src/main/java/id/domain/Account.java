@@ -5,7 +5,6 @@ import id.domain.sha.ShaPasswordEncoder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.bson.types.ObjectId;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
@@ -27,13 +26,14 @@ public class Account implements Serializable {
     private static final long serialVersionUID = 1391314099197545306L;
 
     @Id
-    @Setter
-    private ObjectId id;
+    @Getter
+    private String id;
     @NotEmpty
     @Getter
     @Setter
     private String username;
     @NotEmpty
+    @Getter
     @Setter
     private String password;
     @Getter
@@ -43,10 +43,6 @@ public class Account implements Serializable {
     @Getter
     @Setter
     private AccountPolicy policy = new AccountPolicy();
-
-    public String getId() {
-        return id.toHexString();
-    }
 
     @Autowired
     private AccountRepository accountRepository;

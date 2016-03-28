@@ -19,8 +19,12 @@ import java.util.stream.Stream;
 @Component
 public class AutowireBeanAspect {
 
+    private final AutowireCapableBeanFactory autowireCapableBeanFactory;
+
     @Autowired
-    private AutowireCapableBeanFactory autowireCapableBeanFactory;
+    public AutowireBeanAspect(final AutowireCapableBeanFactory autowireCapableBeanFactory) {
+        this.autowireCapableBeanFactory = autowireCapableBeanFactory;
+    }
 
     @Before("execution(* id..*ServiceImpl.*(..))\")")
     public void beforeService(final JoinPoint joinPoint) {
@@ -30,7 +34,9 @@ public class AutowireBeanAspect {
 
     @AfterReturning(value = "execution(* id..*Repository.*(..))\")", returning = "result")
     public void afterRepositoryReturning(final JoinPoint joinPoint, final Object result) {
-        if (((Optional) result).isPresent()) {
+        if (result instanceof Optional && ((Optional) result).isPresent()) {
+            autowireCapableBeanFactory.autowireBean(result);
+        } else {
             autowireCapableBeanFactory.autowireBean(result);
         }
     }

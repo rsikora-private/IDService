@@ -15,8 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class IdResourceImpl implements IdResource {
 
+    private final AccountService accountService;
+
     @Autowired
-    private AccountService accountService;
+    public IdResourceImpl(final AccountService accountService) {
+        this.accountService = accountService;
+    }
 
     @Override
     public Account signIn(@RequestBody final Credentials credentials) {
