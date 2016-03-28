@@ -33,7 +33,6 @@ public class Account implements Serializable {
     @Setter
     private String username;
     @NotEmpty
-    @Getter
     @Setter
     private String password;
     @Getter
