@@ -1,6 +1,5 @@
 package id.domain;
 
-import id.domain.persistance.AccountRepository;
 import id.domain.sha.ShaPasswordEncoder;
 import lombok.Getter;
 import lombok.Setter;
@@ -43,8 +42,10 @@ public class Account implements Serializable {
     @Setter
     private AccountPolicy policy = new AccountPolicy();
 
-    @Autowired
-    private AccountRepository accountRepository;
+    /**
+     * DDD elements
+     */
+
     @Autowired
     private ShaPasswordEncoder shaPasswordEncoder;
 
@@ -53,8 +54,7 @@ public class Account implements Serializable {
         return encodedPassword.equals(password);
     }
 
-    public Account register() {
+    public void encodePassword() {
         setPassword(shaPasswordEncoder.encode(password));
-        return accountRepository.save(this);
     }
 }
