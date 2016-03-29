@@ -43,7 +43,7 @@ public class Account implements Serializable {
     private AccountPolicy policy = new AccountPolicy();
 
     /**
-     * Some DDD elements
+     * New_feature
      */
 
     @Autowired
