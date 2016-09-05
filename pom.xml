@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
 
     <name>IDService</name>
-    <description>The authentication service * test</description>
+    <description>The authentication service * test 2</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
