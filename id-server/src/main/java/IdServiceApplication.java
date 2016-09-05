@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 public class IdServiceApplication {
 
     public static void main(String[] args) {
-        System.out.printf("aaa");
+        System.out.printf("aaa gg");
         SpringApplication.run(IdServiceApplication.class, args);
     }
 }
