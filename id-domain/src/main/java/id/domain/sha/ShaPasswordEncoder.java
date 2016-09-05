@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 @Component
 public class ShaPasswordEncoder {
 
-    private final static String ENCODING = "UTF-8";
+    private static final String ENCODING = "UTF-8";
 
     public String encode(final String raw) {
         final MessageDigest md;
