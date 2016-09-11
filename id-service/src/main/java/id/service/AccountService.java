@@ -4,7 +4,7 @@ import id.domain.Account;
 import id.domain.Credentials;
 
 /**
- * Created by robertsikora on 25.03.2016.
+ * Created by robertsikora on 25.03.2016. fit
  */
 public interface AccountService {
 
